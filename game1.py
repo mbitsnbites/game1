@@ -1,22 +1,37 @@
 #!/usr/bin/env python3
 
 import pygame
+import math
+
+
+# Screen settings.
+RESOLUTION = (1024, 768)  # Game resolution.
+USE_FULLSCREEN = False    # Set this to True for fullscreen mode.
+
 
 def main():
     # Initialize the pygame module.
     pygame.init()
 
     # Set the application icon and title.
-    icon = pygame.image.load("icon_128x128.png")
+    icon = pygame.image.load('icon_128x128.png')
     pygame.display.set_icon(icon)
-    pygame.display.set_caption("My game")
+    pygame.display.set_caption('My game')
 
-    # Create a surface on screen that has the size of 1024 x 768.
-    screen = pygame.display.set_mode((1024, 768))
+    # Create the screen surface (the game window).
+    resolution = RESOLUTION
+    flags = pygame.DOUBLEBUF | pygame.HWSURFACE;
+    if USE_FULLSCREEN:
+        resolution = (0, 0)
+        flags = flags | pygame.FULLSCREEN
+    screen = pygame.display.set_mode(resolution, flags)
      
     # Main loop.
     running = True
     while running:
+        # Get the current time (convert milliseconds to seconds).
+        t = pygame.time.get_ticks() * 0.001
+
         # Event handling: Get all events from the eventqueue.
         for event in pygame.event.get():
             # Should we quit?
@@ -24,7 +39,13 @@ def main():
                 # Stop the main loop.
                 running = False
 
+        # Clear the screen with a background color.
+        screen.fill((50, 80, 100))
+
         # TODO: Do something :-)
+
+        # When we're done painting to the screen, flip front/back buffers.
+        pygame.display.flip()
 
 
     # Stop the program.
