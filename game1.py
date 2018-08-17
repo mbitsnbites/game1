@@ -3,6 +3,7 @@
 import math
 import os
 import pygame
+import sys
 
 
 # Game and data directories.
@@ -10,7 +11,7 @@ GAME_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_DIR = os.path.join(GAME_DIR, 'data')
 
 # Screen settings.
-RESOLUTION = (1024, 768)  # Game resolution.
+WINDOW_RESOLUTION = (1024, 768)
 USE_FULLSCREEN = False    # Set this to True for fullscreen mode.
 
 
@@ -24,12 +25,18 @@ def main():
     pygame.display.set_caption('My game')
 
     # Create the screen surface (the game window).
-    resolution = RESOLUTION
+    res = WINDOW_RESOLUTION
     flags = pygame.DOUBLEBUF | pygame.HWSURFACE;
     if USE_FULLSCREEN:
-        resolution = (0, 0)
+        res = (0, 0)
         flags = flags | pygame.FULLSCREEN
-    screen = pygame.display.set_mode(resolution, flags)
+    screen = pygame.display.set_mode(res, flags)
+
+    # Get the real size of the window (important in fullscreen mode).
+    res = screen.get_size()
+
+    # Load game data.
+    spaceship = pygame.image.load(os.path.join(DATA_DIR, 'spaceship.png'))
      
     # Main loop.
     running = True
@@ -47,7 +54,8 @@ def main():
         # Clear the screen with a background color.
         screen.fill((50, 80, 100))
 
-        # TODO: Do something :-)
+        # Draw a spaceship :-)
+        screen.blit(spaceship, (500+200*math.sin(t), 400))
 
         # When we're done painting to the screen, flip front/back buffers.
         pygame.display.flip()
