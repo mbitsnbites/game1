@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
-import pygame
 import math
+import os
+import pygame
 
+
+# Game and data directories.
+GAME_DIR = os.path.dirname(os.path.realpath(__file__))
+DATA_DIR = os.path.join(GAME_DIR, 'data')
 
 # Screen settings.
 RESOLUTION = (1024, 768)  # Game resolution.
@@ -14,7 +19,7 @@ def main():
     pygame.init()
 
     # Set the application icon and title.
-    icon = pygame.image.load('icon_128x128.png')
+    icon = pygame.image.load(os.path.join(DATA_DIR, 'icon.png'))
     pygame.display.set_icon(icon)
     pygame.display.set_caption('My game')
 
